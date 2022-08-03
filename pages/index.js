@@ -4,6 +4,7 @@ import { getJobs } from "../datalayer/";
 import JobsList from "../components/data/lists/JobsList";
 
 export default function Index({ jobs }) {
+  console.log(jobs);
   return <JobsList jobs={jobs} />;
 }
 
