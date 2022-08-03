@@ -11,3 +11,28 @@ export const getJobs = async () => {
 
   return jobs;
 };
+
+export const getJobBySlug = async ({ slug }) => {
+  const rawJob = await client.getEntries({
+    content_type: "job",
+    "fields.slug": slug,
+  });
+
+  if (rawJob.items.length == 0) {
+    return null;
+  }
+
+  return jobFormatter(rawJob.items[0]);
+};
+
+export const getSlugs = async () => {
+  const rawSlugs = await client.getEntries({
+    content_type: "job",
+    select: ["fields.slug"],
+    include: 2,
+  });
+
+  const slugs = rawSlugs.items.map((rawslug) => rawslug.fields.slug);
+
+  return slugs;
+};
