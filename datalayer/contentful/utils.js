@@ -15,6 +15,23 @@ export const richTextFormatter = (rawRichText) => {
   return styledRichText;
 };
 
+export const tagsFormatter = (tagsField) => {
+  let tags = [];
+  tagsField.map((rawTag) => {
+    const tag = rawTag.sys.id;
+    tags.push(tag);
+  });
+
+  return tags;
+};
+
+export const skillsFormatter = (parsedTags) => {
+  const skillTags = parsedTags.filter((tag) => tag.includes("skill."));
+  const skills = skillTags.map((skillTag) => skillTag.replace("skill.", ""));
+
+  return skills;
+};
+
 export const imageFormatter = (imageField) => {
   return {
     url: `https:${imageField.fields.file.url}`,
@@ -49,6 +66,9 @@ export const jobFormatter = (rawJob, parseRelatedJobs = true) => {
   job.jobResponsibilities = richTextFormatter(
     rawJob.fields.jobResponsibilities
   );
+
+  job.tags = tagsFormatter(rawJob.metadata.tags);
+  job.skills = skillsFormatter(job.tags);
 
   const relatedJobs = rawJob.fields.relatedJobs || [];
 
