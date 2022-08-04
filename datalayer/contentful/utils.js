@@ -1,8 +1,18 @@
 import date from "date-and-time";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 
 export const dateFormatter = (dateString) => {
   const dateObject = date.parse(dateString.split("T")[0], "YYYY-MM-DD");
   return dateObject.toDateString();
+};
+
+export const richTextFormatter = (rawRichText) => {
+  const parsedRichText = documentToHtmlString(rawRichText);
+  let styledRichText = parsedRichText.replace(
+    "<ul>",
+    "<ul style='list-style-type: disc'>"
+  );
+  return styledRichText;
 };
 
 export const imageFormatter = (imageField) => {
@@ -30,7 +40,15 @@ export const jobFormatter = (rawJob, parseRelatedJobs = true) => {
   job.id = rawJob.sys.id;
   job.locale = rawJob.sys.locale;
   job.datePosted = dateFormatter(rawJob.fields.datePosted);
-  job.company = companyFormatter(rawJob.fields.company)
+  job.company = companyFormatter(rawJob.fields.company);
+  job.aboutYou = richTextFormatter(rawJob.fields.aboutYou);
+  job.jobDescription = richTextFormatter(rawJob.fields.jobDescription);
+  job.remunerationPackage = richTextFormatter(
+    rawJob.fields.remunerationPackage
+  );
+  job.jobResponsibilities = richTextFormatter(
+    rawJob.fields.jobResponsibilities
+  );
 
   const relatedJobs = rawJob.fields.relatedJobs || [];
 

@@ -20,7 +20,6 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  console.log("slug in slug.jsx:", params.slug);
   const slug = params.slug;
   const job = await getJobBySlug({ slug });
 

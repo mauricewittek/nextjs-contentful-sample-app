@@ -25,9 +25,6 @@ export const getJobBySlug = async ({ slug }) => {
 
   const job = jobFormatter(rawJob.items[0]);
 
-  console.log("slug:", slug);
-  console.log("job:", job);
-
   return job;
 };
 

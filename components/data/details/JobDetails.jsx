@@ -7,7 +7,6 @@ import { ArrowRightIcon, ChevronLeftIcon } from "@heroicons/react/solid";
 import JobCard from "../cards/JobCard";
 
 const JobDetails = ({ job }) => {
-  console.log(job);
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full">
       {/* Page content */}
