@@ -56,3 +56,27 @@ export const getJobSlugs = async () => {
 
   return slugs;
 };
+
+export const searchJobs = async (query) => {
+  let contentfulQuery = {
+    content_type: "job",
+    include: 2,
+  };
+
+  if (query.remoteOkOnly) {
+    contentfulQuery["fields.remote"] = true;
+  }
+
+  if (query.featuredJobsOnly) {
+    contentfulQuery["fields.featuredJob"] = true;
+  }
+
+  const res = await client.getEntries(contentfulQuery);
+  const foundJobs = res.items;
+
+  const jobs = foundJobs.map((rawJob) => {
+    return jobFormatter(rawJob);
+  });
+
+  return jobs;
+};
