@@ -74,6 +74,12 @@ export const searchJobs = async (query) => {
   contentfulQuery["fields.baseAnnualSalary[gte]"] = query.minBaseSalary;
   contentfulQuery["fields.baseAnnualSalary[lte]"] = query.maxBaseSalary;
 
+  // Add Inclusion Query Filters
+  // [DOES NOT WORK]
+/*contentfulQuery["fields.jobType[in]"] = query.jobTypes.join(",");
+  contentfulQuery["fields.experienceLevel[in]"] =
+    query.experienceLevels.join(","); */
+
   const res = await client.getEntries(contentfulQuery);
   const foundJobs = res.items;
 
@@ -81,5 +87,18 @@ export const searchJobs = async (query) => {
     return jobFormatter(rawJob);
   });
 
-  return jobs;
+  // Now because contentful doesn't have an OR operator we have to filter at the application level which is not efficient
+  let filteredJobs = jobs.filter((job) => {
+    if (query.experienceLevels.length == 0) return true;
+    if (query.experienceLevels.includes(job.experienceLevel)) return true;
+    return false;
+  });
+
+  filteredJobs = filteredJobs.filter((job) => {
+    if (query.jobTypes.length == 0) return true;
+    if (query.jobTypes.includes(job.jobType)) return true;
+    return false;
+  });
+
+  return filteredJobs;
 };
