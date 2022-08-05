@@ -25,20 +25,20 @@ function JobsPageSideBarForm({
   ];
 
   const baseSalaryRangesOptions = [
-    { value: "<20K", display: "< £20K", bounds: { min: 0, max: 20000 } },
+    { value: "<20K", display: "< €20K", bounds: { min: 0, max: 20000 } },
     {
       value: "20K-50K",
-      display: "£20K - £50K",
+      display: "€20K - €50K",
       bounds: { min: 20001, max: 50000 },
     },
     {
       value: "50K-100K",
-      display: "£50K - £100K",
+      display: "€50K - €100K",
       bounds: { min: 50001, max: 100000 },
     },
     {
       value: "> 100K",
-      display: "> £100K",
+      display: "> €100K",
       bounds: { min: 100001, max: 1000000 },
     },
   ];

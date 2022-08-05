@@ -71,6 +71,9 @@ export const searchJobs = async (query) => {
     contentfulQuery["fields.featuredJob"] = true;
   }
 
+  contentfulQuery["fields.baseAnnualSalary[gte]"] = query.minBaseSalary;
+  contentfulQuery["fields.baseAnnualSalary[lte]"] = query.maxBaseSalary;
+
   const res = await client.getEntries(contentfulQuery);
   const foundJobs = res.items;
 

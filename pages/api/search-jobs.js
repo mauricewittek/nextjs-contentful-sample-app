@@ -3,10 +3,24 @@ import { searchJobs } from "../../datalayer";
 
 export default async function handler(req, res) {
   const { sideBarFormState, searchFormState } = req.body;
-  const jobs = await searchJobs({
+  const minBaseSalary =
+    sideBarFormState.baseSalaryBounds.length > 0
+      ? Math.min(...sideBarFormState.baseSalaryBounds)
+      : 0;
+
+  const maxBaseSalary =
+    sideBarFormState.baseSalaryBounds.length > 0
+      ? Math.max(...sideBarFormState.baseSalaryBounds)
+      : 1000000;
+
+  const query = {
     ...sideBarFormState,
-    searchText: searchFormState,
-  });
+    searchBarText: searchFormState,
+    minBaseSalary,
+    maxBaseSalary,
+  };
+
+  const jobs = await searchJobs(query);
 
   res.status(200).json(jobs);
 }
