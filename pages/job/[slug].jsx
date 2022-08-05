@@ -1,7 +1,6 @@
 import React from "react";
 import JobDetails from "../../components/data/details/JobDetails";
-import { getSlugs } from "../../datalayer/contentful/job";
-import { getJobBySlug } from "../../datalayer/contentful/job";
+import { getJobSlugs, getJobBySlug } from "../../datalayer";
 
 const JobDetailsPage = ({ job }) => {
   return <JobDetails job={job} />;
@@ -10,7 +9,7 @@ const JobDetailsPage = ({ job }) => {
 export default JobDetailsPage;
 
 export const getStaticPaths = async () => {
-  const slugs = await getSlugs();
+  const slugs = await getJobSlugs();
   const paths = slugs.map((slug) => ({ params: { slug } }));
 
   return {

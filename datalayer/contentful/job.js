@@ -28,7 +28,25 @@ export const getJobBySlug = async ({ slug }) => {
   return job;
 };
 
-export const getSlugs = async () => {
+export const getJobsByCompanyId = async ({ id }) => {
+  const result = await client.getEntries({
+    content_type: "job",
+    "fields.company.sys.id": id,
+    include: 2,
+  });
+
+  if (result.items.length == 0) {
+    return null;
+  }
+
+  const jobs = result.items.map((rawJob) => {
+    return jobFormatter(rawJob);
+  });
+
+  return jobs;
+};
+
+export const getJobSlugs = async () => {
   const rawSlugs = await client.getEntries({
     content_type: "job",
     select: ["fields.slug"],

@@ -47,6 +47,7 @@ export const companyFormatter = (rawCompany) => {
   company.id = rawCompany.sys.id;
   company.locale = rawCompany.sys.locale;
   company.logo = imageFormatter(rawCompany.fields.logo);
+  company.locale = rawCompany.sys.locale
 
   return company;
 };

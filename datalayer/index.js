@@ -1,2 +1,11 @@
-export { getCompanies } from "./contentful/company";
-export { getJobs } from "./contentful/job";
+export {
+  getCompanies,
+  getCompaniesSlugs,
+  getCompanyBySlug,
+} from "./contentful/company";
+export {
+  getJobs,
+  getJobBySlug,
+  getJobsByCompanyId,
+  getJobSlugs,
+} from "./contentful/job";
