@@ -7,7 +7,6 @@ const JobsSortForm = ({ jobs, setDisplayedJobs }) => {
     e.preventDefault();
     const newSortby = e.target.value;
     setSortby(newSortby);
-    alert(`Sorting by: ${newSortby}`);
 
     //TODO: create a function to sort the jobs based on the new selected value
   };

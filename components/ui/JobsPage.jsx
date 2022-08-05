@@ -24,7 +24,7 @@ const JobsPage = ({ jobs, jobsSkills }) => {
     selectedTags: [],
   });
 
-  const [searchFormState, setSearchFormState] = useState();
+  const [searchFormState, setSearchFormState] = useState("");
   const [displayedJobs, setDisplayedJobs] = useState(jobs);
 
   const searchJobs = async (apiUrl, formsStates) => {
@@ -55,6 +55,10 @@ const JobsPage = ({ jobs, jobsSkills }) => {
     if (initialRenderSearchForm.current) {
       initialRenderSearchForm.current = false;
     } else {
+      if (searchFormState.length >= 3 || searchFormState.length == 0) {
+        const formsStates = { searchFormState, sideBarFormState };
+        searchJobs("api/search-jobs", formsStates);
+      }
     }
   }, [searchFormState]);
 

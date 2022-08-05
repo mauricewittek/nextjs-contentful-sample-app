@@ -84,6 +84,10 @@ export const searchJobs = async (query) => {
   contentfulQuery["fields.baseAnnualSalary[gte]"] = query.minBaseSalary;
   contentfulQuery["fields.baseAnnualSalary[lte]"] = query.maxBaseSalary;
 
+  if (query.searchBarText) {
+    contentfulQuery["query"] = query.searchBarText;
+  }
+
   // Add Inclusion Query Filters
   // [DOES NOT WORK]
   /*contentfulQuery["fields.jobType[in]"] = query.jobTypes.join(",");
