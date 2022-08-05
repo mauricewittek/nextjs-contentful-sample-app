@@ -4,7 +4,7 @@ import SearchJobForm from "../forms/SeachJobForm";
 import JobsSortForm from "../forms/JobsSortForm";
 import JobsPageSideBarForm from "../forms/JobsPageSideBarForm";
 
-const JobsPage = ({ jobs }) => {
+const JobsPage = ({ jobs, jobsSkills }) => {
   let title = `Found ${jobs.length} Jobs.`;
   switch (jobs.length) {
     case 0:
@@ -21,6 +21,7 @@ const JobsPage = ({ jobs }) => {
     featuredJobsOnly: false,
     baseSalaryOptions: [],
     baseSalaryBounds: [],
+    selectedTags: [],
   });
 
   const [searchFormState, setSearchFormState] = useState();
@@ -63,6 +64,7 @@ const JobsPage = ({ jobs }) => {
         sideBarFormState={sideBarFormState}
         setSideBarFormState={setSideBarFormState}
         setdisplayedJobs={setDisplayedJobs}
+        jobsSkills={jobsSkills}
       />
       <div className="w-full">
         <SearchJobForm

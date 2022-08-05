@@ -9,4 +9,5 @@ export {
   getJobsByCompanyId,
   getJobSlugs,
   searchJobs,
+  getJobsSkills,
 } from "./contentful/job";

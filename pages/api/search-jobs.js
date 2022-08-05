@@ -17,8 +17,12 @@ export default async function handler(req, res) {
       ? Math.max(...sideBarFormState.baseSalaryBounds)
       : 1000000;
 
-  const jobTypes = sideBarFormState.jobTypes.map(jobTypes => capitalizeFirstLetter(jobTypes));
-  const experienceLevels = sideBarFormState.experienceLevels.map(experienceLevel => capitalizeFirstLetter(experienceLevel));
+  const jobTypes = sideBarFormState.jobTypes.map((jobTypes) =>
+    capitalizeFirstLetter(jobTypes)
+  );
+  const experienceLevels = sideBarFormState.experienceLevels.map(
+    (experienceLevel) => capitalizeFirstLetter(experienceLevel)
+  );
 
   const query = {
     ...sideBarFormState,

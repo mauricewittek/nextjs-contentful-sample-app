@@ -1,5 +1,5 @@
 import { client } from "./client";
-import { jobFormatter } from "./utils";
+import { jobFormatter, skillsFormatter, tagsFormatter } from "./utils";
 
 export const getJobs = async () => {
   const res = await client.getEntries({ content_type: "job" });
@@ -57,6 +57,16 @@ export const getJobSlugs = async () => {
   return slugs;
 };
 
+export const getJobsSkills = async () => {
+  const res = await client.getTags();
+  const rawTags = res.items;
+
+  const tags = tagsFormatter(rawTags);
+  const skills = skillsFormatter(tags);
+
+  return skills;
+};
+
 export const searchJobs = async (query) => {
   let contentfulQuery = {
     content_type: "job",
@@ -76,7 +86,7 @@ export const searchJobs = async (query) => {
 
   // Add Inclusion Query Filters
   // [DOES NOT WORK]
-/*contentfulQuery["fields.jobType[in]"] = query.jobTypes.join(",");
+  /*contentfulQuery["fields.jobType[in]"] = query.jobTypes.join(",");
   contentfulQuery["fields.experienceLevel[in]"] =
     query.experienceLevels.join(","); */
 
@@ -87,7 +97,7 @@ export const searchJobs = async (query) => {
     return jobFormatter(rawJob);
   });
 
-  // Now because contentful doesn't have an OR operator we have to filter at the application level which is not efficient
+  // Contentful doesn't have an OR operator so we have to filter at the application level
   let filteredJobs = jobs.filter((job) => {
     if (query.experienceLevels.length == 0) return true;
     if (query.experienceLevels.includes(job.experienceLevel)) return true;
